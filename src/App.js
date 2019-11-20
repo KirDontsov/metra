@@ -1,6 +1,12 @@
 import React, { Component, Fragment } from "react";
+// import { connect } from "react-redux";
+// import { bindActionCreators } from "redux";
+// import * as carsActions from "./actions/cars";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Helmet } from "react-helmet";
+// import axios from "axios";
+// import _ from "lodash";
+
 import { routes } from "./routes";
 
 import NavBar from "./components/NavBar";
@@ -84,5 +90,16 @@ class App extends Component {
     }
   }
 }
+
+// const mapStateToProps = ({ cars }) => ({
+//   cars: cars.items,
+//   isReady: cars.isReady
+// });
+
+// const mapDispatchToProps = dispatch => ({
+//   ...bindActionCreators(carsActions, dispatch)
+// });
+
+// export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 export default App;
