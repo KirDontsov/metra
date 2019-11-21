@@ -16,6 +16,7 @@
     "react-geolocation": "^1.0.4",
     "react-helmet": "^5.2.1",
     "react-leaflet": "^2.5.0",
+    "react-leaflet-rotatedmarker": "^0.1.0",
     "react-motion": "^0.5.2",
     "react-redux": "^7.1.3",
     "react-router-dom": "^5.1.2",

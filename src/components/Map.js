@@ -1,34 +1,43 @@
 import React, { Component, Fragment } from "react";
-import { Map as LeafletMap, TileLayer, Marker, Popup } from "react-leaflet";
+import {
+  Map as LeafletMap,
+  TileLayer,
+  Marker,
+  Popup,
+  ZoomControl
+} from "react-leaflet";
+import RotatedMarker from "./RotatedMarker";
 import L from "leaflet";
-import GeoLocation from "./Geolocation";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as carsActions from "../actions/cars";
 // import * as coordsActions from "../actions/coords";
 import axios from "axios";
 import _ from "lodash";
+import carIcon from "../img/car.png";
 
 import "../scss/Map.scss";
 
 const greenIcon = L.icon({
-  iconUrl: "https://leafletjs.com/examples/custom-icons/leaf-green.png",
-  shadowUrl: "https://leafletjs.com/examples/custom-icons/leaf-shadow.png",
-
-  iconSize: [38, 95], // size of the icon
-  shadowSize: [50, 64], // size of the shadow
-  iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
-  shadowAnchor: [4, 62], // the same for the shadow
-  popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+  iconUrl: carIcon,
+  shadowUrl: null,
+  shadowSize: [0, 0],
+  shadowAnchor: [0, 0],
+  iconSize: [30, 30], // size of the icon
+  iconAnchor: [15, 15], // point of the icon which will correspond to marker's location
+  popupAnchor: [-3, -6]
 });
 
 class MyMap extends Component {
   constructor() {
     super();
     this.state = {
-      latitude: 44.5604632,
-      longitude: 38.079259,
-      zoom: 16
+      location: {
+        latitude: "",
+        longitude: ""
+      },
+      haveUsersLocation: false,
+      zoom: 10
     };
   }
 
@@ -38,45 +47,83 @@ class MyMap extends Component {
       setItems(_.values(data));
       setTimeout(() => {
         that.request(that);
-      }, 5000);
+      }, 3000);
     });
   }
 
   componentDidMount() {
     this.request(this);
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        this.setState({
+          location: {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+          },
+          haveUsersLocation: true,
+          zoom: 16
+        });
+        console.log(position.coords);
+      },
+      () => {
+        this.setState({
+          location: {
+            latitude: 44.560424499999996,
+            longitude: 38.079167
+          },
+          haveUsersLocation: false,
+          zoom: 15
+        });
+      }
+    );
   }
 
   render() {
     const { cars, isReady } = this.props;
-    const position = [this.state.latitude, this.state.longitude];
+    const position = [
+      this.state.location.latitude,
+      this.state.location.longitude
+    ];
     return (
       <Fragment>
-        <ul>
-          {!isReady
-            ? "Загрузка..."
-            : cars[0].map((item, i) => (
-                <li key={i}>
-                  {item.latitude} | {item.longitude} | {item.CarModel}
-                </li>
-              ))}
-        </ul>
-        <LeafletMap center={position} zoom={this.state.zoom}>
+        <LeafletMap
+          center={position}
+          zoom={this.state.zoom}
+          zoomControl={false}
+          maxZoom={20}
+          minZoom={4}
+        >
           <TileLayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png" />
+          <ZoomControl position="bottomright" />
+          {this.state.haveUsersLocation ? (
+            <Marker position={position}>
+              <Popup>
+                <span>Здесь находитесь Вы</span>
+              </Popup>
+            </Marker>
+          ) : (
+            ""
+          )}
 
           {!isReady
             ? "Загрузка..."
             : cars[0].map((item, i) => {
                 let pos = [item.latitude, item.longitude];
                 return (
-                  <Marker key={i} position={pos} icon={greenIcon}>
+                  <RotatedMarker
+                    key={i}
+                    position={pos}
+                    icon={greenIcon}
+                    rotationAngle={item.course}
+                    rotationOrigin={"center"}
+                  >
                     <Popup>
                       <span>{item.CarModel}</span>
                     </Popup>
-                  </Marker>
+                  </RotatedMarker>
                 );
               })}
         </LeafletMap>
-        <GeoLocation />
       </Fragment>
     );
   }

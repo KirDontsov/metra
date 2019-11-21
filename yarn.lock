@@ -6069,6 +6069,11 @@ lcid@^2.0.0:
   dependencies:
     invert-kv "^2.0.0"
 
+leaflet-rotatedmarker@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/leaflet-rotatedmarker/-/leaflet-rotatedmarker-0.2.0.tgz#4467f49f98d1bfd56959bd9c6705203dd2601277"
+  integrity sha1-RGf0n5jRv9VpWb2cZwUgPdJgEnc=
+
 leaflet@^1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.5.1.tgz#9afb9d963d66c870066b1342e7a06f92840f46bf"
@@ -8431,6 +8436,13 @@ react-is@^16.8.1, react-is@^16.8.4:
   version "16.10.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.10.1.tgz#0612786bf19df406502d935494f0450b40b8294f"
   integrity sha512-BXUMf9sIOPXXZWqr7+c5SeOKJykyVr2u0UDzEf4LNGc6taGkQe1A9DFD07umCIXz45RLr9oAAwZbAJ0Pkknfaw==
+
+react-leaflet-rotatedmarker@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/react-leaflet-rotatedmarker/-/react-leaflet-rotatedmarker-0.1.0.tgz#954159ea7d663f927e16a0f9acc0c760b2329ae2"
+  integrity sha512-mzc3s04GsdkQHnWHbIF2/LhnUADuxpO89P4EQrmN57csu98tgUAcfRGUvetDn+ifyf6g+cLrcJs84jUMmaIjww==
+  dependencies:
+    leaflet-rotatedmarker "^0.2.0"
 
 react-leaflet@^2.5.0:
   version "2.5.0"
