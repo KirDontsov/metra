@@ -9,8 +9,8 @@ import {
 import RotatedMarker from "./RotatedMarker";
 import L from "leaflet";
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import * as carsActions from "../actions/cars";
+// import { bindActionCreators } from "redux";
+// import * as carsActions from "../actions/cars";
 // import * as coordsActions from "../actions/coords";
 import axios from "axios";
 import _ from "lodash";
@@ -42,12 +42,12 @@ class MyMap extends Component {
   }
 
   request(that) {
-    const { setItems } = that.props;
+    const { setCarsOnMap } = that.props;
     axios.get("http://taxi.tools:8000/cabsformetrasite").then(({ data }) => {
-      setItems(_.values(data));
-      setTimeout(() => {
-        that.request(that);
-      }, 3000);
+      setCarsOnMap(_.values(data.carsList));
+      // setTimeout(() => {
+      //   that.request(that);
+      // }, 3000);
     });
   }
 
@@ -63,7 +63,6 @@ class MyMap extends Component {
           haveUsersLocation: true,
           zoom: 16
         });
-        console.log(position.coords);
       },
       () => {
         this.setState({
@@ -79,11 +78,12 @@ class MyMap extends Component {
   }
 
   render() {
-    const { cars, isReady } = this.props;
+    const { items, isReady } = this.props;
     const position = [
       this.state.location.latitude,
       this.state.location.longitude
     ];
+
     return (
       <Fragment>
         <LeafletMap
@@ -107,8 +107,9 @@ class MyMap extends Component {
 
           {!isReady
             ? "Загрузка..."
-            : cars[0].map((item, i) => {
+            : items.map((item, i) => {
                 let pos = [item.latitude, item.longitude];
+                console.log(item);
                 return (
                   <RotatedMarker
                     key={i}
@@ -129,15 +130,13 @@ class MyMap extends Component {
   }
 }
 
-const mapStateToProps = ({ cars }) => ({
-  cars: cars.items,
-  // coords: coords.items,
-  isReady: cars.isReady
+const mapState = state => ({
+  items: state.setItems.items,
+  isReady: state.setItems.isReady
 });
 
-const mapDispatchToProps = dispatch => ({
-  ...bindActionCreators(carsActions, dispatch)
-  // ...bindActionCreators(coordsActions, dispatch)
+const mapDispatch = dispatch => ({
+  setCarsOnMap: dispatch.setItems.setItems
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MyMap);
+export default connect(mapState, mapDispatch)(MyMap);

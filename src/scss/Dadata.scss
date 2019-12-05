@@ -1,0 +1,40 @@
+label {
+  display: block;
+}
+
+form {
+  border: 1px solid #eaeaea;
+  padding: 24px;
+}
+
+.form-group {
+  position: relative;
+}
+
+.form-group input {
+  width: 100%;
+  margin-bottom: 1em;
+  height: 3.5em;
+}
+
+.input-label {
+  position: absolute;
+  top: 1em;
+  left: 0.5em;
+  font-size: 80%;
+  transition: all 0.1s ease-in-out;
+}
+
+.input-label--active {
+  font-size: 60%;
+  top: 0.5em;
+}
+
+button[type="submit"] {
+  margin-top: 16px;
+}
+
+pre {
+  background: #eaeaea;
+  padding: 16px;
+}

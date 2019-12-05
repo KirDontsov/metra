@@ -1,6 +1,7 @@
 :root {
   --black: #1b1b1b;
   --gray: #f4f4f4;
+  --red: #f03939;
 }
 
 *,
@@ -112,6 +113,11 @@ h2 {
 }
 
 h3.dark {
+  font-size: 40px;
+  color: #1b1b1b;
+}
+
+h2.dark {
   font-size: 40px;
   color: #1b1b1b;
 }
