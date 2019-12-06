@@ -5,9 +5,9 @@ import MyMap from "../components/Map";
 const Home = () => (
   <Fragment>
     <div className="container web">
-      <div className="heading">
+      {/* <div className="heading">
         <h1 className="title main">Закажи такси</h1>
-      </div>
+      </div> */}
       <Quiz />
       <MyMap />
     </div>

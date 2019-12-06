@@ -1,4 +1,5 @@
 :root {
+  --white: #fff;
   --black: #1b1b1b;
   --gray: #f4f4f4;
   --red: #f03939;
@@ -82,6 +83,7 @@ h1 {
 
 h2 {
   color: var(--gray);
+  margin-bottom: 10px;
 }
 
 .heading {

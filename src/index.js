@@ -4,14 +4,14 @@ import { Provider } from "react-redux";
 import { init } from "@rematch/core";
 
 import setItems from "./models/setItems";
-import secondAddress from "./models/secondAddress";
+import Quiz from "./models/Quiz";
 
 import App from "./App";
 
 const store = init({
   models: {
     setItems,
-    secondAddress
+    Quiz
   }
 });
 

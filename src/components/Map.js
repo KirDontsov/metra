@@ -29,76 +29,119 @@ const greenIcon = L.icon({
 });
 
 class MyMap extends Component {
-  constructor() {
-    super();
-    this.state = {
-      location: {
-        latitude: "",
-        longitude: ""
-      },
-      haveUsersLocation: false,
-      zoom: 10
-    };
-  }
 
   request(that) {
     const { setCarsOnMap } = that.props;
     axios.get("http://taxi.tools:8000/cabsformetrasite").then(({ data }) => {
       setCarsOnMap(_.values(data.carsList));
-      // setTimeout(() => {
-      //   that.request(that);
-      // }, 3000);
+      setTimeout(() => {
+        that.request(that);
+      }, 3000);
     });
   }
 
   componentDidMount() {
     this.request(this);
-    navigator.geolocation.getCurrentPosition(
-      position => {
-        this.setState({
-          location: {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude
-          },
-          haveUsersLocation: true,
-          zoom: 16
-        });
-      },
-      () => {
-        this.setState({
-          location: {
-            latitude: 44.560424499999996,
-            longitude: 38.079167
-          },
-          haveUsersLocation: false,
-          zoom: 15
-        });
-      }
-    );
+    // navigator.geolocation.getCurrentPosition(
+    //   position => {
+    //     this.props.setMapCenter({
+    //       latitude: position.coords.latitude,
+    //       longitude: position.coords.longitude,
+    //       haveUsersLocation: true,
+    //       zoom: 16
+    //     });
+    //   },
+    //   () => {
+    //     this.props.setMapCenter({
+    //       latitude: 44.560424499999996,
+    //       longitude: 38.079167,
+    //       haveUsersLocation: false,
+    //       zoom: 15
+    //     });
+    //   }
+    // );
   }
 
   render() {
-    const { items, isReady } = this.props;
-    const position = [
-      this.state.location.latitude,
-      this.state.location.longitude
-    ];
+    const { items, isReady, zoom, latitude, longitude } = this.props;
+    const position = [latitude, longitude];
+
+    const pos1 =
+      this.props.firstAddress !== "" && this.props.didFetched1 === true
+        ? this.props.firstAddress.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos
+            .split(" ")
+            .reverse()
+            .map(value => parseFloat(value))
+        : null;
+
+    const pos2 =
+      this.props.secondAddress !== "" && this.props.didFetched1 === true
+        ? this.props.secondAddress.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos
+            .split(" ")
+            .reverse()
+            .map(value => parseFloat(value))
+        : null;
+
+    const pos3 =
+      this.props.additionalAddress !== "" && this.props.didFetched1 === true
+        ? this.props.additionalAddress.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos
+            .split(" ")
+            .reverse()
+            .map(value => parseFloat(value))
+        : null;
+
+    // const {
+    //   firstAddress,
+    //   secondAddress,
+    //   additionalAddress,
+    //   didFetched1,
+    //   didFetched2,
+    //   didFetched3
+    // } = this.props;
 
     return (
       <Fragment>
         <LeafletMap
           center={position}
-          zoom={this.state.zoom}
+          zoom={zoom}
           zoomControl={false}
           maxZoom={20}
           minZoom={4}
         >
           <TileLayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png" />
           <ZoomControl position="bottomright" />
-          {this.state.haveUsersLocation ? (
+          {/* {this.state.haveUsersLocation ? (
             <Marker position={position}>
               <Popup>
                 <span>Здесь находитесь Вы</span>
+              </Popup>
+            </Marker>
+          ) : (
+            ""
+          )} */}
+
+          {pos1 ? (
+            <Marker position={pos1}>
+              <Popup>
+                <span>Здесь находитесь Вы</span>
+              </Popup>
+            </Marker>
+          ) : (
+            ""
+          )}
+          {pos2 ? (
+            <Marker position={pos2}>
+              <Popup>
+                <span>Поедем сюда</span>
+              </Popup>
+            </Marker>
+          ) : (
+            ""
+          )}
+          {pos3 ? (
+            <Marker position={pos3}>
+              <Popup>
+                <span>Заедем попути сюда</span>
               </Popup>
             </Marker>
           ) : (
@@ -109,7 +152,7 @@ class MyMap extends Component {
             ? "Загрузка..."
             : items.map((item, i) => {
                 let pos = [item.latitude, item.longitude];
-                console.log(item);
+                // console.log(item);
                 return (
                   <RotatedMarker
                     key={i}
@@ -132,11 +175,21 @@ class MyMap extends Component {
 
 const mapState = state => ({
   items: state.setItems.items,
-  isReady: state.setItems.isReady
+  isReady: state.setItems.isReady,
+  firstAddress: state.Quiz.data1,
+  secondAddress: state.Quiz.data2,
+  additionalAddress: state.Quiz.data3,
+  didFetched1: state.Quiz.didFetched1,
+  didFetched2: state.Quiz.didFetched2,
+  didFetched3: state.Quiz.didFetched3,
+  latitude: state.setItems.latitude,
+  longitude: state.setItems.longitude,
+  zoom: state.setItems.zoom
 });
 
 const mapDispatch = dispatch => ({
   setCarsOnMap: dispatch.setItems.setItems
+  // setMapCenter: dispatch.setItems.setMapCenter
 });
 
 export default connect(mapState, mapDispatch)(MyMap);
