@@ -85,4 +85,7 @@ pre {
     background: transparent;
     color: var(--red);
   }
+  &:focus {
+    outline: none;
+  }
 }
