@@ -7,7 +7,7 @@ import "../scss/Nav.scss";
 const NavBar = props => (
   <div className="nav-wrapper">
     <div className="center">
-      <div className="nav__top">
+      {/* <div className="nav__top">
         <div className="left__text">
           <p>Время работы: с 8:00 до 16:00</p>
         </div>
@@ -19,7 +19,7 @@ const NavBar = props => (
             +7 (918) 123-33-33
           </a>
         </div>
-      </div>
+      </div> */}
     </div>
     <div className="center">
       <nav>
