@@ -42,11 +42,18 @@ export class Quiz extends Component {
     setTimeout(() => {
       if (this.props.didFetched1 === true && this.props.didFetched2 === true) {
         console.log(this.props.data1);
-        let coords1 = this.props.data1.response.GeoObjectCollection
-          .featureMember[0].GeoObject.Point.pos;
-        let coords2 = this.props.data2.response.GeoObjectCollection
-          .featureMember[0].GeoObject.Point.pos;
-        let coords3 = [];
+        let coords1 = this.props.data1.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos
+          .split(" ")
+          .map(c => parseFloat(c));
+        let coords2 = this.props.data2.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos
+          .split(" ")
+          .map(c => parseFloat(c));
+        let coords3 = "";
+        if (this.props.data3 !== "" || null || undefined) {
+          coords3 = this.props.data3.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos
+            .split(" ")
+            .map(c => parseFloat(c));
+        }
 
         let AddressА = this.props.data1.response.GeoObjectCollection.featureMember[0].GeoObject.metaDataProperty.GeocoderMetaData.Address.Components.filter(
           word => ["locality", "street", "house"].includes(word.kind)
@@ -69,25 +76,28 @@ export class Quiz extends Component {
             .join(", ");
         }
 
+        let a = new Date();
         let ID =
-          coords1[0].replace(/\./g, "") +
+          ("" + coords1[0]).replace(/\./g, "") +
           "-" +
-          coords1[1].replace(/\./g, "") +
+          ("" + coords1[1]).replace(/\./g, "") +
           "-" +
-          coords2[0].replace(/\./g, "") +
+          ("" + coords2[0]).replace(/\./g, "") +
           "-" +
-          coords2[1].replace(/\./g, "") +
-          new Date().toLocaleDateString().replace(/\./g, "");
+          ("" + coords2[1]).replace(/\./g, "");
 
         if (this.props.data3 !== "" || null || undefined) {
-          coords3 = this.props.data3.response.GeoObjectCollection
-            .featureMember[0].GeoObject.Point.pos;
+          ID +=
+            ("" + coords3[0]).replace(/\./g, "") +
+            "-" +
+            ("" + coords3[1]).replace(/\./g, "");
         }
+
+        ID += "-" + a.toLocaleDateString().replace(/\./g, "");
+
         let formData = JSON.stringify({
           OUID: ID,
-          AddressА: AddressА,
-          AddressB: AddressB,
-          Address1: Address1,
+          Points: [AddressА, Address1, AddressB],
           phone: this.props.phone,
           comment: this.props.comment,
           roadway: [coords1, coords3, coords2]
@@ -105,7 +115,7 @@ export class Quiz extends Component {
           });
         });
       }
-    }, 1000);
+    }, 2000);
   }
 
   render() {
