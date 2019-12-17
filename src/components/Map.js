@@ -4,7 +4,8 @@ import {
   TileLayer,
   Marker,
   Popup,
-  ZoomControl
+  ZoomControl,
+  GeoJSON
 } from "react-leaflet";
 import RotatedMarker from "./RotatedMarker";
 import L from "leaflet";
@@ -14,8 +15,9 @@ import { connect } from "react-redux";
 // import * as coordsActions from "../actions/coords";
 import axios from "axios";
 import _ from "lodash";
+import { default as bezierSpline } from "@turf/bezier-spline";
+import * as helpers from "@turf/helpers";
 import carIcon from "../img/car.png";
-
 import "../scss/Map.scss";
 
 const greenIcon = L.icon({
@@ -29,7 +31,6 @@ const greenIcon = L.icon({
 });
 
 class MyMap extends Component {
-
   request(that) {
     const { setCarsOnMap } = that.props;
     axios.get("http://taxi.tools:8000/cabsformetrasite").then(({ data }) => {
@@ -66,6 +67,13 @@ class MyMap extends Component {
     const { items, isReady, zoom, latitude, longitude } = this.props;
     const position = [latitude, longitude];
 
+    const line =
+      this.props.res !== ""
+        ? helpers.lineString(this.props.res.OrderCalc.pointsway)
+        : null;
+
+    const curved = this.props.res !== "" ? bezierSpline(line) : null;
+
     const pos1 =
       this.props.firstAddress !== "" && this.props.didFetched1 === true
         ? this.props.firstAddress.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos
@@ -90,15 +98,6 @@ class MyMap extends Component {
             .map(value => parseFloat(value))
         : null;
 
-    // const {
-    //   firstAddress,
-    //   secondAddress,
-    //   additionalAddress,
-    //   didFetched1,
-    //   didFetched2,
-    //   didFetched3
-    // } = this.props;
-
     return (
       <Fragment>
         <LeafletMap
@@ -110,6 +109,9 @@ class MyMap extends Component {
         >
           <TileLayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png" />
           <ZoomControl position="bottomright" />
+
+          {this.props.res !== "" ? <GeoJSON data={curved} /> : null}
+
           {/* {this.state.haveUsersLocation ? (
             <Marker position={position}>
               <Popup>
@@ -184,7 +186,8 @@ const mapState = state => ({
   didFetched3: state.Quiz.didFetched3,
   latitude: state.setItems.latitude,
   longitude: state.setItems.longitude,
-  zoom: state.setItems.zoom
+  zoom: state.setItems.zoom,
+  res: state.Quiz.res
 });
 
 const mapDispatch = dispatch => ({

@@ -97,10 +97,10 @@ export class Quiz extends Component {
 
         let formData = JSON.stringify({
           OUID: ID,
-          Points: [AddressА, Address1, AddressB],
+          Points: [AddressА, Address1, AddressB].filter(item => item !== ""),
           phone: this.props.phone,
           comment: this.props.comment,
-          roadway: [coords1, coords3, coords2]
+          roadway: [coords1, coords3, coords2].filter(item => item !== "")
         });
         fetch("http://webclient.metrataxi.ru:8000/metrasite", {
           // credentials: "same-origin",
@@ -111,7 +111,8 @@ export class Quiz extends Component {
           // })
         }).then(response => {
           response.json().then(data => {
-            console.log("Successful" + data);
+            console.log("Successful", data);
+            this.props.setRes(data);
           });
         });
       }
@@ -269,7 +270,8 @@ const mapDispatch = ({
     setComment,
     setData1,
     setData2,
-    setData3
+    setData3,
+    setRes
   }
 }) => ({
   setFirstAddress,
@@ -279,7 +281,8 @@ const mapDispatch = ({
   setComment,
   setData1,
   setData2,
-  setData3
+  setData3,
+  setRes
 });
 
 export default connect(mapState, mapDispatch)(Quiz);

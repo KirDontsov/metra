@@ -14,7 +14,8 @@ export default {
     didFetched1: false,
     didFetched2: false,
     didFetched3: false,
-    errors: null
+    errors: null,
+    res: ""
   },
   reducers: {
     setFirstAddress: (state, payload) => ({
@@ -51,11 +52,10 @@ export default {
       ...state,
       data3: payload,
       didFetched3: true
+    }),
+    setRes: (state, payload) => ({
+      ...state,
+      res: payload
     })
-  },
-  effects: dispatch => ({
-    onEnterEnds(payload, state) {
-      dispatch.Quiz.fetchCoords(payload)
-    }
-  })
+  }
 };
