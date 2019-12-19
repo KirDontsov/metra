@@ -14,6 +14,7 @@ export default {
     didFetched1: false,
     didFetched2: false,
     didFetched3: false,
+    backEndFetch: 0,
     errors: null,
     res: ""
   },
@@ -56,6 +57,9 @@ export default {
     setRes: (state, payload) => ({
       ...state,
       res: payload
+    }),
+    clearGeoJson: (state, payload) => ({
+      ...state,
     })
   }
 };

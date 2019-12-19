@@ -25,7 +25,7 @@ const greenIcon = L.icon({
   shadowUrl: null,
   shadowSize: [0, 0],
   shadowAnchor: [0, 0],
-  iconSize: [30, 30], // size of the icon
+  iconSize: [20, 40], // size of the icon
   iconAnchor: [15, 15], // point of the icon which will correspond to marker's location
   popupAnchor: [-3, -6]
 });
@@ -37,8 +37,18 @@ class MyMap extends Component {
       setCarsOnMap(_.values(data.carsList));
       setTimeout(() => {
         that.request(that);
+        this.setPath();
       }, 3000);
     });
+  }
+
+  setPath() {
+    const { res } = this.props;
+    const points = res !== "" ? res.OrderCalc.pointsway : null;
+    const line = res !== "" ? helpers.lineString(points) : null;
+    const curved = res !== "" ? bezierSpline(line) : null;
+
+    return res !== "" ? <GeoJSON data={curved} key={Math.random()} /> : null;
   }
 
   componentDidMount() {
@@ -64,35 +74,40 @@ class MyMap extends Component {
   }
 
   render() {
-    const { items, isReady, zoom, latitude, longitude } = this.props;
+    const {
+      items,
+      isReady,
+      zoom,
+      latitude,
+      longitude,
+      firstAddress,
+      secondAddress,
+      additionalAddress,
+      didFetched1,
+      didFetched2,
+      didFetched3
+    } = this.props;
     const position = [latitude, longitude];
 
-    const line =
-      this.props.res !== ""
-        ? helpers.lineString(this.props.res.OrderCalc.pointsway)
-        : null;
-
-    const curved = this.props.res !== "" ? bezierSpline(line) : null;
-
     const pos1 =
-      this.props.firstAddress !== "" && this.props.didFetched1 === true
-        ? this.props.firstAddress.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos
+      firstAddress !== "" && didFetched1 === true
+        ? firstAddress.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos
             .split(" ")
             .reverse()
             .map(value => parseFloat(value))
         : null;
 
     const pos2 =
-      this.props.secondAddress !== "" && this.props.didFetched1 === true
-        ? this.props.secondAddress.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos
+      secondAddress !== "" && didFetched2 === true
+        ? secondAddress.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos
             .split(" ")
             .reverse()
             .map(value => parseFloat(value))
         : null;
 
     const pos3 =
-      this.props.additionalAddress !== "" && this.props.didFetched1 === true
-        ? this.props.additionalAddress.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos
+      additionalAddress !== "" && didFetched3 === true
+        ? additionalAddress.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos
             .split(" ")
             .reverse()
             .map(value => parseFloat(value))
@@ -110,7 +125,7 @@ class MyMap extends Component {
           <TileLayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png" />
           <ZoomControl position="bottomright" />
 
-          {this.props.res !== "" ? <GeoJSON data={curved} /> : null}
+          {this.setPath()}
 
           {/* {this.state.haveUsersLocation ? (
             <Marker position={position}>

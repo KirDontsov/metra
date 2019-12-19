@@ -5,6 +5,15 @@ import { connect } from "react-redux";
 import "../scss/Dadata.scss";
 
 export class Quiz extends Component {
+  generateId() {
+    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+      (
+        c ^
+        (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
+      ).toString(16)
+    );
+  }
+
   handleClick(e, that) {
     let firstAddress = JSON.stringify(that.props.firstAddress.value, 0, 2);
     let secondAddress = JSON.stringify(that.props.secondAddress.value, 0, 2);
@@ -41,7 +50,7 @@ export class Quiz extends Component {
 
     setTimeout(() => {
       if (this.props.didFetched1 === true && this.props.didFetched2 === true) {
-        console.log(this.props.data1);
+        // console.log(this.props.data1);
         let coords1 = this.props.data1.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos
           .split(" ")
           .map(c => parseFloat(c));
@@ -76,27 +85,8 @@ export class Quiz extends Component {
             .join(", ");
         }
 
-        let a = new Date();
-        let ID =
-          ("" + coords1[0]).replace(/\./g, "") +
-          "-" +
-          ("" + coords1[1]).replace(/\./g, "") +
-          "-" +
-          ("" + coords2[0]).replace(/\./g, "") +
-          "-" +
-          ("" + coords2[1]).replace(/\./g, "");
-
-        if (this.props.data3 !== "" || null || undefined) {
-          ID +=
-            ("" + coords3[0]).replace(/\./g, "") +
-            "-" +
-            ("" + coords3[1]).replace(/\./g, "");
-        }
-
-        ID += "-" + a.toLocaleDateString().replace(/\./g, "");
-
         let formData = JSON.stringify({
-          OUID: ID,
+          OUID: this.generateId(),
           Points: [AddressА, Address1, AddressB].filter(item => item !== ""),
           phone: this.props.phone,
           comment: this.props.comment,
@@ -116,14 +106,43 @@ export class Quiz extends Component {
           });
         });
       }
-    }, 2000);
+    }, 1000);
+  }
+
+  getDuration() {
+    const rideDuration =
+      this.props.res !== ""
+        ? JSON.stringify(this.props.res.OrderCalc.duration, 0, 2)
+        : 0;
+    const d = new Date(rideDuration * 1000);
+    const minutes = d.getMinutes();
+
+    return " " + minutes + " мин.";
+  }
+
+  getCost() {
+    const rideCost =
+      this.props.res !== ""
+        ? JSON.stringify(this.props.res.OrderCalc.RideCost, 0, 2) / 100
+        : 0;
+
+    return " " + rideCost + " руб.";
+  }
+
+  getDistance() {
+    const rideDistance =
+      this.props.res !== ""
+        ? JSON.stringify(this.props.res.OrderCalc.distance, 0, 2)
+        : 0;
+
+    return " " + rideDistance / 1000 + " км";
   }
 
   render() {
     const {
-      data1,
-      data2,
-      data3,
+      // data1,
+      // data2,
+      // data3,
       query1,
       query2,
       query3,
@@ -140,6 +159,7 @@ export class Quiz extends Component {
       0,
       2
     );
+
     return (
       <div className="Quiz">
         <h2 className="dark">Заказать такси</h2>
@@ -204,37 +224,16 @@ export class Quiz extends Component {
 
         <ul className="coords">
           <li>
-            {firstAddressQuery}
-            {data1 !== ""
-              ? JSON.stringify(
-                  data1.response.GeoObjectCollection.featureMember[0].GeoObject
-                    .Point.pos,
-                  0,
-                  2
-                )
-              : null}
+            Время в пути:
+            {this.getDuration()}
           </li>
           <li>
-            {secondAddressQuery}
-            {data2 !== ""
-              ? JSON.stringify(
-                  data2.response.GeoObjectCollection.featureMember[0].GeoObject
-                    .Point.pos,
-                  0,
-                  2
-                )
-              : null}
+            Стоимость поездки:
+            {this.getCost()}
           </li>
           <li>
-            {additionalAddressQuery}
-            {data3 !== ""
-              ? JSON.stringify(
-                  data3.response.GeoObjectCollection.featureMember[0].GeoObject
-                    .Point.pos,
-                  0,
-                  2
-                )
-              : null}
+            Расстояние:
+            {this.getDistance()}
           </li>
           <li>{JSON.stringify(phone.phone, 0, 2)}</li>
           <li>{JSON.stringify(comment.comment, 0, 2)}</li>
@@ -258,7 +257,8 @@ const mapState = state => ({
   data3: state.Quiz.data3,
   didFetched1: state.Quiz.didFetched1,
   didFetched2: state.Quiz.didFetched2,
-  didFetched3: state.Quiz.didFetched3
+  didFetched3: state.Quiz.didFetched3,
+  res: state.Quiz.res
 });
 
 const mapDispatch = ({
