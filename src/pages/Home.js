@@ -1,10 +1,13 @@
 import React, { Fragment } from "react";
-import Quiz from "../components/Quiz";
+
 import MyMap from "../components/Map";
+import ChangeCity from "../components/ChangeCity";
+import Quiz from "../components/Quiz";
 
 const Home = () => (
   <Fragment>
     <div className="container web">
+      <ChangeCity />
       {/* <div className="heading">
         <h1 className="title main">Закажи такси</h1>
       </div> */}

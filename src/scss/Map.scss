@@ -1,6 +1,8 @@
 .leaflet-container {
   height: 100vh;
   width: 100%;
+  position: relative;
+  z-index: 0;
 }
 
 #locate-position {
@@ -17,8 +19,4 @@
 .leaflet-marker-icon {
   transition: 2s;
   transform: rotate(-45deg);
-}
-
-.leaflet-container {
-  z-index: 0;
 }

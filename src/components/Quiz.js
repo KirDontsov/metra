@@ -1,8 +1,10 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import DadataSuggestions from "react-dadata-suggestions";
 import MaskInput from "./MaskInput";
 import { connect } from "react-redux";
-import "../scss/Dadata.scss";
+import "../scss/Quiz.scss";
+
+const isIE = /*@cc_on!@*/ false || !!document.documentMode;
 
 export class Quiz extends Component {
   generateId() {
@@ -138,6 +140,23 @@ export class Quiz extends Component {
     return " " + rideDistance / 1000 + " км";
   }
 
+  button() {
+    if (isIE) {
+      return (
+        <div>
+          Чтобы рассчитать стоимость поездки, откройте страницу в более
+          современном браузере, например: Chrome, FireFox, Safari, Opera, Edge
+        </div>
+      );
+    } else {
+      return (
+        <button className="btn" onClick={e => this.handleClick(e, this)}>
+          Рассчитать
+        </button>
+      );
+    }
+  }
+
   render() {
     const {
       // data1,
@@ -162,33 +181,37 @@ export class Quiz extends Component {
 
     return (
       <div className="Quiz">
-        <h2 className="dark">Заказать такси</h2>
-        <label className="address">Откуда?</label>
-        <DadataSuggestions
-          label="Откуда?"
-          token="d19c6d0b94e64b21d8168f9659f64f7b8c1acd1f"
-          onSelect={suggestion => this.props.setFirstAddress(suggestion)}
-          deferRequestBy={300}
-          placeholder={"Откуда Вас забрать?"}
-          query={
-            firstAddressQuery === undefined || null || ""
-              ? query1
-              : firstAddressQuery
-          }
-        />
-        <label className="address">Куда?</label>
-        <DadataSuggestions
-          token="d19c6d0b94e64b21d8168f9659f64f7b8c1acd1f"
-          onSelect={suggestion => this.props.setSecondAddress(suggestion)}
-          deferRequestBy={600}
-          placeholder={"Куда поедем?"}
-          query={
-            secondAddressQuery === undefined || null || ""
-              ? query2
-              : secondAddressQuery
-          }
-        />
-        <label className="address">Дополнительный адрес?</label>
+        <h2 className="dark">Рассчитать стоимость поездки</h2>
+        {!isIE ? (
+          <Fragment>
+            <label className="address">Откуда?</label>
+            <DadataSuggestions
+              label="Откуда?"
+              token="d19c6d0b94e64b21d8168f9659f64f7b8c1acd1f"
+              onSelect={suggestion => this.props.setFirstAddress(suggestion)}
+              deferRequestBy={300}
+              placeholder={"Откуда Вас забрать?"}
+              query={
+                firstAddressQuery === undefined || null || ""
+                  ? query1
+                  : firstAddressQuery
+              }
+            />
+            <label className="address">Куда?</label>
+            <DadataSuggestions
+              token="d19c6d0b94e64b21d8168f9659f64f7b8c1acd1f"
+              onSelect={suggestion => this.props.setSecondAddress(suggestion)}
+              deferRequestBy={600}
+              placeholder={"Куда поедем?"}
+              query={
+                secondAddressQuery === undefined || null || ""
+                  ? query2
+                  : secondAddressQuery
+              }
+            />
+          </Fragment>
+        ) : null}
+        {/* <label className="address">Дополнительный адрес?</label>
         <DadataSuggestions
           token="d19c6d0b94e64b21d8168f9659f64f7b8c1acd1f"
           onSelect={suggestion => this.props.setAdditionalAddress(suggestion)}
@@ -216,28 +239,28 @@ export class Quiz extends Component {
             type="text"
             onChange={e => this.props.setComment({ comment: e.target.value })}
           />
-        </div>
+        </div> */}
 
-        <button className="btn" onClick={e => this.handleClick(e, this)}>
-          Рассчитать стоимость поездки
-        </button>
+        {this.button()}
 
-        <ul className="coords">
-          <li>
-            Время в пути:
-            {this.getDuration()}
-          </li>
-          <li>
-            Стоимость поездки:
-            {this.getCost()}
-          </li>
-          <li>
-            Расстояние:
-            {this.getDistance()}
-          </li>
-          <li>{JSON.stringify(phone.phone, 0, 2)}</li>
-          <li>{JSON.stringify(comment.comment, 0, 2)}</li>
-        </ul>
+        {!isIE ? (
+          <ul className="coords">
+            <li>
+              Время в пути:
+              {this.getDuration()}
+            </li>
+            <li>
+              Стоимость поездки:
+              {this.getCost()}
+            </li>
+            <li>
+              Расстояние:
+              {this.getDistance()}
+            </li>
+            <li>{JSON.stringify(phone.phone, 0, 2)}</li>
+            <li>{JSON.stringify(comment.comment, 0, 2)}</li>
+          </ul>
+        ) : null}
       </div>
     );
   }

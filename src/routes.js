@@ -11,16 +11,16 @@ export const routes = [
     name: "Metra",
     className: "logo",
     component: Home
-  },
-  {
-    id: 2,
-    isNavBar: true,
-    isExact: true,
-    path: "/about",
-    name: "О Нас",
-    className: "nav-link",
-    component: About
   }
+  // {
+  //   id: 2,
+  //   isNavBar: true,
+  //   isExact: true,
+  //   path: "/about",
+  //   name: "О Нас",
+  //   className: "nav-link",
+  //   component: About
+  // }
   // {
   // 	id: 3,
   // 	isNavBar: true,

@@ -59,7 +59,19 @@ export default {
       res: payload
     }),
     clearGeoJson: (state, payload) => ({
+      ...state
+    }),
+    setQuery1: (state, payload) => ({
       ...state,
+      query1: payload
+    }),
+    setQuery2: (state, payload) => ({
+      ...state,
+      query2: payload
+    }),
+    setQuery3: (state, payload) => ({
+      ...state,
+      query3: payload
     })
   }
 };

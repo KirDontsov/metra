@@ -32,9 +32,9 @@ const greenIcon = L.icon({
 
 class MyMap extends Component {
   request(that) {
-    const { setCarsOnMap } = that.props;
+    const { setItems } = that.props;
     axios.get("http://taxi.tools:8000/cabsformetrasite").then(({ data }) => {
-      setCarsOnMap(_.values(data.carsList));
+      setItems(_.values(data.carsList));
       setTimeout(() => {
         that.request(that);
         this.setPath();
@@ -53,24 +53,6 @@ class MyMap extends Component {
 
   componentDidMount() {
     this.request(this);
-    // navigator.geolocation.getCurrentPosition(
-    //   position => {
-    //     this.props.setMapCenter({
-    //       latitude: position.coords.latitude,
-    //       longitude: position.coords.longitude,
-    //       haveUsersLocation: true,
-    //       zoom: 16
-    //     });
-    //   },
-    //   () => {
-    //     this.props.setMapCenter({
-    //       latitude: 44.560424499999996,
-    //       longitude: 38.079167,
-    //       haveUsersLocation: false,
-    //       zoom: 15
-    //     });
-    //   }
-    // );
   }
 
   render() {
@@ -199,15 +181,15 @@ const mapState = state => ({
   didFetched1: state.Quiz.didFetched1,
   didFetched2: state.Quiz.didFetched2,
   didFetched3: state.Quiz.didFetched3,
-  latitude: state.setItems.latitude,
-  longitude: state.setItems.longitude,
-  zoom: state.setItems.zoom,
+  latitude: state.city.latitude,
+  longitude: state.city.longitude,
+  zoom: state.city.zoom,
   res: state.Quiz.res
 });
 
-const mapDispatch = dispatch => ({
-  setCarsOnMap: dispatch.setItems.setItems
-  // setMapCenter: dispatch.setItems.setMapCenter
+const mapDispatch = ({ setItems: { setItems }, city: { setCity } }) => ({
+  setItems,
+  setCity
 });
 
 export default connect(mapState, mapDispatch)(MyMap);

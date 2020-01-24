@@ -35,6 +35,15 @@ const NavBar = props => (
           </NavLink>
         ))}
       </nav>
+      <div className="rightNav">
+        <a href="tel:+79181233333" className="phone">
+          +7 (918) 123-33-33
+        </a>
+        <a href="tel:+78614133333" className="phone">
+          +7 (861-41) 3-33-33
+        </a>
+      </div>
+
       {/* <Search /> */}
     </div>
   </div>
