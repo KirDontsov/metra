@@ -10,9 +10,7 @@ import {
 import RotatedMarker from "./RotatedMarker";
 import L from "leaflet";
 import { connect } from "react-redux";
-// import { bindActionCreators } from "redux";
-// import * as carsActions from "../actions/cars";
-// import * as coordsActions from "../actions/coords";
+import MapboxLayer from "./MapBoxGl";
 import axios from "axios";
 import _ from "lodash";
 import { default as bezierSpline } from "@turf/bezier-spline";
@@ -29,6 +27,9 @@ const greenIcon = L.icon({
   iconAnchor: [15, 15], // point of the icon which will correspond to marker's location
   popupAnchor: [-3, -6]
 });
+
+const MAPBOX_ACCESS_TOKEN =
+  "pk.eyJ1Ijoia2lyZG9udHNvdiIsImEiOiJjazZjNnZka2EwODJjM29xeDdscHcwYnAyIn0.jR6sL1P44Vjaybu-Ty2hdg";
 
 class MyMap extends Component {
   request(that) {
@@ -104,7 +105,11 @@ class MyMap extends Component {
           maxZoom={20}
           minZoom={4}
         >
-          <TileLayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png" />
+          <MapboxLayer
+            accessToken={MAPBOX_ACCESS_TOKEN}
+            style="mapbox://styles/kirdontsov/ck6c6yba20rmv1iox0nkivpza"
+          />
+          {/* <TileLayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png" /> */}
           <ZoomControl position="bottomright" />
 
           {this.setPath()}
