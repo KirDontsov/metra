@@ -1,103 +1,132 @@
+@import "Vars.scss";
+
 label {
-  display: block;
-  font-weight: bold;
+	display: block;
+	font-weight: bold;
 }
 
 input {
-  background: none;
-  &:focus {
-    outline: none;
-  }
+	background: none;
+	&:focus {
+		outline: none;
+	}
 }
 
 .form-group {
-  position: relative;
+	position: relative;
 }
 
 .form-group input {
-  width: 100%;
-  margin-bottom: 1em;
-  height: 3.5em;
+	width: 100%;
+	margin-bottom: 1em;
+	height: 3.5em;
 }
 
 .input-label {
-  position: absolute;
-  top: 1em;
-  left: 0.5em;
-  font-size: 80%;
-  transition: all 0.1s ease-in-out;
+	position: absolute;
+	top: 1em;
+	left: 0.5em;
+	font-size: 80%;
+	transition: all 0.1s ease-in-out;
 }
 
 .input-label--active {
-  font-size: 60%;
-  top: 0.5em;
+	font-size: 60%;
+	top: 0.5em;
 }
 
 button[type="submit"] {
-  margin-top: 16px;
+	margin-top: 16px;
 }
 
 pre {
-  background: #eaeaea;
-  padding: 16px;
+	background: #eaeaea;
+	padding: 16px;
 }
 
 .suggestions-input,
 .form-group > input {
-  width: 100%;
-  height: 30px;
-  border-top: 0;
-  border-left: 0;
-  border-right: 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  margin-bottom: 10px;
+	width: 100%;
+	height: 30px;
+	border-top: 0;
+	border-left: 0;
+	border-right: 0;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	margin-bottom: 10px;
 }
 
 .coords {
-  list-style-type: none;
+	list-style-type: none;
 }
 
 .comment {
-  font-weight: bold;
+	font-weight: bold;
 }
 
 .Quiz {
-  position: absolute;
-  top: 170px;
-  left: 120px;
-  width: 500px;
-  background: rgba(255, 255, 255, 0.8);
-  z-index: 9999;
-  padding: 30px;
-  @media (max-width: 1440px) {
-    left: 9%;
-    @media (max-width: 1024px) {
-      left: 12%;
-      @media (max-width: 768px) {
-        position: static;
-        padding: 30px 0;
-        width: 100%;
-      }
-    }
-  }
-}
-
-.btn {
-  min-width: 250px;
-  height: 50px;
-  border: 1px solid var(--red);
-  background: var(--red);
-  color: #fff;
-  cursor: pointer;
-  transition: 0.3s;
-  font-size: 16px;
-  padding: 0 30px;
-  margin: 30px 0;
-  &:hover {
-    background: transparent;
-    color: var(--red);
-  }
-  &:focus {
-    outline: none;
-  }
+	float: left;
+	top: 170px;
+	left: 120px;
+	width: 500px;
+	background: rgba(255, 255, 255, 0.8);
+	z-index: 9999;
+	padding: 0 30px 30px 0;
+	@media (max-width: 1440px) {
+		left: 9%;
+		@media (max-width: 1024px) {
+			left: 12%;
+			@media (max-width: 768px) {
+				position: static;
+				padding: 30px 0;
+				width: 100%;
+			}
+		}
+	}
+	h2.dark {
+		font-style: normal;
+		font-weight: 500;
+		font-size: 70px;
+		line-height: 83px;
+		color: $textColor;
+		margin-bottom: 60px;
+	}
+	.quizForm {
+		max-width: 400px;
+		.quizText {
+			font-size: 20px;
+			line-height: 24px;
+			margin-bottom: 13px;
+		}
+		.suggestions-input,
+		.form-group > input {
+			background: #eef2f4;
+			border: none !important;
+			height: 55.4px !important;
+			padding: 0;
+			border-radius: 4px;
+		}
+		.btn {
+			min-width: 250px;
+			height: 55.4px;
+			border: 1px solid $blue;
+			border-radius: 4px;
+			background: $blue;
+			color: #fff;
+			cursor: pointer;
+			transition: 0.3s;
+			font-size: 16px;
+			padding: 0 30px;
+			margin: 30px 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			&:hover {
+				background: transparent;
+				color: $blue;
+			}
+			&:focus {
+				outline: none;
+			}
+		}
+	}
 }
