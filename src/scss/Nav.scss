@@ -15,12 +15,12 @@ nav {
 	justify-content: space-between;
 	align-items: center;
 	height: 150px;
-	max-width: 300px;
+	max-width: 350px;
 	width: 100%;
 	text-align: left;
 	position: relative;
-	left: 50%;
-	transform: translateX(-50%);
+	left: 41%;
+	// transform: translateX(-50%);
 	// margin-left: 50px;
 	// padding-left: 100px;
 }
@@ -28,8 +28,8 @@ nav {
 nav a {
 	color: $textColor;
 	border: 0;
-	font-size: 1em;
-	line-height: 50px;
+	font-size: 20px;
+	line-height: 24px;
 	font-weight: 500;
 	position: relative;
 	display: flex;
@@ -102,7 +102,7 @@ nav a {
 	background: $blue;
 
 	position: absolute;
-	bottom: -5px;
+	bottom: -13px;
 	left: 50%;
 	transform: translateX(-50%);
 	transition: 0.3s;

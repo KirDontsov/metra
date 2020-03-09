@@ -12,7 +12,6 @@ const NavBar = props => {
 		let div = document.querySelector(".wrapper");
 		div.scrollTop = 0;
 	}
-	console.log(props.routes);
 	return (
 		<div className="nav-wrapper">
 			<div className="center">
@@ -35,8 +34,8 @@ const NavBar = props => {
 					route.id === 1 ? (
 						<Link
 							className={route.className}
-							exact={route.isExact}
-							activeClassName="active"
+							exact={true}
+							activeclassname="active"
 							key={route.path}
 							to={route.path}
 							onClick={e => handleClick(e)}
@@ -49,13 +48,7 @@ const NavBar = props => {
 					{props.routes.map(
 						route =>
 							route.id > 1 && (
-								<NavLink
-									className={route.className}
-									exact={route.isExact}
-									activeClassName="active"
-									key={route.path}
-									to={route.path}
-								>
+								<NavLink className={route.className} exact={true} activeclassname="active" key={route.path} to={route.path}>
 									{route.name}
 								</NavLink>
 							)

@@ -13,7 +13,7 @@ export class Quiz extends Component {
 			(c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16)
 		);
 	}
-
+	// получение координат и построение маршрута
 	handleClick(e, that) {
 		let firstAddress = JSON.stringify(that.props.firstAddress.value, 0, 2);
 		let secondAddress = JSON.stringify(that.props.secondAddress.value, 0, 2);
@@ -47,9 +47,13 @@ export class Quiz extends Component {
 		setTimeout(() => {
 			if (this.props.didFetched1 === true && this.props.didFetched2 === true) {
 				// console.log(this.props.data1);
+				// this.props.setLatitude(this.props.coords1[0]);
+				// this.props.setLongitude(this.props.coords1[1]);
 				let coords1 = this.props.data1.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos
 					.split(" ")
 					.map(c => parseFloat(c));
+				this.props.setLatitude(coords1[1]);
+				this.props.setLongitude(coords1[0]);
 				let coords2 = this.props.data2.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos
 					.split(" ")
 					.map(c => parseFloat(c));
@@ -125,6 +129,13 @@ export class Quiz extends Component {
 		return " " + rideDistance / 1000 + " км";
 	}
 
+	onFocusOne() {
+		this.props.setQuery1("г. Геленджик, ");
+	}
+	onFocusTwo() {
+		this.props.setQuery2("г. Геленджик, ");
+	}
+
 	button() {
 		if (isIE) {
 			return (
@@ -171,22 +182,22 @@ export class Quiz extends Component {
 						<div className="quizForm">
 							<p className="quizText">Рассчитайте стоимость поездки</p>
 							<ChangeCity />
-							<label className="address">Откуда?</label>
 							<DadataSuggestions
 								label="Откуда?"
 								token="d19c6d0b94e64b21d8168f9659f64f7b8c1acd1f"
 								onSelect={suggestion => this.props.setFirstAddress(suggestion)}
+								onFocus={() => this.onFocusOne()}
 								deferRequestBy={300}
-								placeholder={"Откуда Вас забрать?"}
+								placeholder={"Откуда"}
 								query={firstAddressQuery === undefined || null || "" ? query1 : firstAddressQuery}
 							/>
-							<label className="address">Куда?</label>
 							<DadataSuggestions
 								autocomplete={true}
 								token="d19c6d0b94e64b21d8168f9659f64f7b8c1acd1f"
 								onSelect={suggestion => this.props.setSecondAddress(suggestion)}
+								onFocus={() => this.onFocusTwo()}
 								deferRequestBy={600}
-								placeholder={"Куда поедем?"}
+								placeholder={"Куда"}
 								query={secondAddressQuery === undefined || null || "" ? query2 : secondAddressQuery}
 							/>
 							{this.button()}
@@ -265,7 +276,20 @@ const mapState = state => ({
 });
 
 const mapDispatch = ({
-	Quiz: { setFirstAddress, setSecondAddress, setAdditionalAddress, setPhone, setComment, setData1, setData2, setData3, setRes }
+	Quiz: {
+		setFirstAddress,
+		setSecondAddress,
+		setAdditionalAddress,
+		setPhone,
+		setComment,
+		setData1,
+		setData2,
+		setData3,
+		setRes,
+		setQuery1,
+		setQuery2
+	},
+	city: { setLatitude, setLongitude }
 }) => ({
 	setFirstAddress,
 	setSecondAddress,
@@ -275,7 +299,11 @@ const mapDispatch = ({
 	setData1,
 	setData2,
 	setData3,
-	setRes
+	setRes,
+	setQuery1,
+	setQuery2,
+	setLatitude,
+	setLongitude
 });
 
 export default connect(

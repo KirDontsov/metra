@@ -97,6 +97,9 @@ pre {
 			line-height: 24px;
 			margin-bottom: 13px;
 		}
+		.suggestions-container {
+			margin: 20px 0;
+		}
 		.suggestions-input,
 		.form-group > input {
 			background: #eef2f4;
@@ -104,6 +107,19 @@ pre {
 			height: 55.4px !important;
 			padding: 0;
 			border-radius: 4px;
+			margin: 0;
+			padding: 0 32px 0 23px;
+			font-size: 20px;
+			line-height: 24px;
+		}
+		.suggestions-wrapper {
+			font-size: 20px;
+			line-height: 24px;
+			color: $textColor;
+		}
+		.suggestions-highlighting {
+			background: transparent;
+			font-weight: 700;
 		}
 		.btn {
 			min-width: 250px;
@@ -120,12 +136,35 @@ pre {
 			display: flex;
 			justify-content: center;
 			align-items: center;
+			position: relative;
 			&:hover {
 				background: transparent;
 				color: $blue;
 			}
 			&:focus {
 				outline: none;
+			}
+			&:after {
+				content: "";
+				display: block;
+				position: absolute;
+				top: 43%;
+				right: 40px;
+				transform: translateY(-50%) rotate(45deg);
+				width: 13px;
+				height: 3px;
+				background: #9db3ff;
+			}
+			&:before {
+				content: "";
+				display: block;
+				position: absolute;
+				top: 57%;
+				right: 40px;
+				transform: translateY(-50%) rotate(-45deg);
+				width: 13px;
+				height: 3px;
+				background: #9db3ff;
 			}
 		}
 	}

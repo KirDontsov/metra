@@ -3,7 +3,7 @@ export default {
 		city: 10,
 		latitude: 44.561141,
 		longitude: 38.076809,
-		zoom: 15
+		zoom: 14
 	},
 	reducers: {
 		setCity: (state, payload) => ({

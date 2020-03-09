@@ -41,7 +41,7 @@ class MyMap extends Component {
 		const line = res !== "" ? helpers.lineString(points) : null;
 		const curved = res !== "" ? bezierSpline(line) : null;
 
-		return res !== "" ? <GeoJSON data={curved} key={Math.random()} /> : null;
+		return res !== "" ? <GeoJSON data={curved} key={Math.random()} style={{ weight: 3 }} /> : null;
 	}
 
 	componentDidMount() {
@@ -62,7 +62,7 @@ class MyMap extends Component {
 			didFetched2,
 			didFetched3
 		} = this.props;
-		const position = [latitude, longitude];
+		let position = [latitude, longitude];
 
 		const pos1 =
 			firstAddress !== "" && didFetched1 === true
@@ -87,6 +87,11 @@ class MyMap extends Component {
 						.reverse()
 						.map(value => parseFloat(value))
 				: null;
+
+		if (firstAddress !== "" && didFetched1 === true) {
+			position = [this.props.latitude, this.props.longitude];
+			this.props.setZoom(17.5);
+		}
 
 		return (
 			<Fragment>
@@ -170,9 +175,10 @@ const mapState = state => ({
 	res: state.Quiz.res
 });
 
-const mapDispatch = ({ setItems: { setItems }, city: { setCity } }) => ({
+const mapDispatch = ({ setItems: { setItems }, city: { setCity, setZoom } }) => ({
 	setItems,
-	setCity
+	setCity,
+	setZoom
 });
 
 export default connect(
