@@ -60,13 +60,11 @@ class ChangeCity extends Component {
   render() {
     return (
       <FormControl variant="outlined" className="changeCity">
-        <InputLabel id="demo-simple-select-outlined-label">
-          {this.renderCityName()}
-        </InputLabel>
+        <InputLabel id="demo-simple-select-outlined-label">Город</InputLabel>
         <Select
           labelId="demo-simple-select-outlined-label"
           id="demo-simple-select-outlined"
-          value=""
+          value={this.props.city}
           onChange={this.handleChange}
           labelWidth={20}
         >

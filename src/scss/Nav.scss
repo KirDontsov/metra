@@ -39,7 +39,7 @@ nav a {
   border: 0;
   font-size: 20px;
   line-height: 24px;
-  font-weight: 500;
+  font-weight: 400;
   position: relative;
   display: flex;
   align-items: center;
@@ -106,7 +106,7 @@ nav a {
   }
   .phone {
     color: $textColor;
-    font-weight: bold;
+    font-weight: 500;
     // &:nth-child(1) {
     // 	padding-right: 30px;
     // }
