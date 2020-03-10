@@ -5,7 +5,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import "../scss/ChangeCity.scss";
 import { connect } from "react-redux";
-import { makeStyles } from "@material-ui/core/styles";
 
 class ChangeCity extends Component {
   handleChange = event => {
