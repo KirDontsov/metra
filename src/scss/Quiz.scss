@@ -1,49 +1,5 @@
 @import "Vars.scss";
 
-label {
-  display: block;
-  font-weight: bold;
-}
-
-input {
-  background: none;
-  &:focus {
-    outline: none;
-  }
-}
-
-.form-group {
-  position: relative;
-}
-
-.form-group input {
-  width: 100%;
-  margin-bottom: 1em;
-  height: 3.5em;
-}
-
-.input-label {
-  position: absolute;
-  top: 1em;
-  left: 0.5em;
-  font-size: 80%;
-  transition: all 0.1s ease-in-out;
-}
-
-.input-label--active {
-  font-size: 60%;
-  top: 0.5em;
-}
-
-button[type="submit"] {
-  margin-top: 16px;
-}
-
-pre {
-  background: #eaeaea;
-  padding: 16px;
-}
-
 .suggestions-input,
 .form-group > input {
   width: 100%;
@@ -78,13 +34,14 @@ pre {
 }
 
 .Quiz {
-  float: left;
+  // float: left;
   top: 170px;
   left: 120px;
   width: 500px;
   background: rgba(255, 255, 255, 0.8);
   z-index: 9999;
   padding: 0 30px 30px 0;
+  margin-bottom: 115px;
   @media (max-width: 1440px) {
     left: 9%;
     @media (max-width: 1024px) {
@@ -109,6 +66,10 @@ pre {
   }
   .quizForm {
     max-width: 400px;
+    position: relative;
+    @media (max-width: 768px) {
+      max-width: 100%;
+    }
     .quizText {
       font-size: 20px;
       line-height: 24px;
@@ -119,15 +80,19 @@ pre {
     }
     .suggestions-input,
     .form-group > input {
-      background: #eef2f4;
+      background: $passiveBlue;
       border: none !important;
       height: 55.4px !important;
+
       padding: 0;
       border-radius: 4px;
       margin: 0;
       padding: 0 32px 0 23px;
       font-size: 20px;
       line-height: 24px;
+      &::placeholder {
+        color: #b0b0b0 !important;
+      }
     }
     .suggestions-wrapper {
       font-size: 20px;
@@ -156,14 +121,14 @@ pre {
         display: block;
         width: 55.4px;
         height: 56.4px;
-        border: 1px solid #eef2f4;
+        border: 1px solid $passiveBlue;
         border-radius: 4px;
         position: absolute;
         top: 46.6px;
-        right: 0%;
+        left: 0%;
         transform: translateY(-50%);
         content: "";
-        background: #eef2f4;
+        background: $passiveBlue;
         cursor: pointer;
         transition: 0.3s;
 
@@ -176,7 +141,7 @@ pre {
           transform: translate(-50%, -50%);
           width: 26px;
           height: 3px;
-          background: #9db3ff;
+          background: $lightBlue;
           transition: 0.3s;
         }
         &:before {
@@ -188,7 +153,7 @@ pre {
           transform: translate(-50%, -50%) rotate(90deg);
           width: 26px;
           height: 3px;
-          background: #9db3ff;
+          background: $lightBlue;
           transition: 0.3s;
         }
       }
@@ -216,7 +181,8 @@ pre {
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      position: relative;
+      position: absolute;
+      right: 0;
       &:hover {
         background: transparent;
         color: $blue;
@@ -237,7 +203,7 @@ pre {
         transform: translateY(-50%) rotate(45deg);
         width: 13px;
         height: 3px;
-        background: #9db3ff;
+        background: $lightBlue;
         transition: 0.3s;
       }
       &:before {
@@ -249,9 +215,23 @@ pre {
         transform: translateY(-50%) rotate(-45deg);
         width: 13px;
         height: 3px;
-        background: #9db3ff;
+        background: $lightBlue;
         transition: 0.3s;
       }
     }
+  }
+}
+
+.MuiOutlinedInput-root {
+  background: $passiveBlue !important;
+  width: 100%;
+  font-size: 20px !important;
+  height: 55.4px !important;
+}
+
+.phoneInput {
+  margin: 0 0 20px 0 !important;
+  label {
+    color: #b0b0b0 !important;
   }
 }

@@ -1,21 +1,27 @@
 import React from "react";
 import InputMask from "react-input-mask";
+import TextField from "@material-ui/core/TextField";
 // import classnames from "classnames";
 
 const MaskInput = props => {
-  const { mask, label, onChange, value } = props;
-
+  const { mask, formLabel, onChange, value, name, fullWidth } = props;
   return (
-    <div className="form-group">
-      <label className="phone">{label}</label>
-      <InputMask
-        mask={mask}
-        autoComplete="off"
-        value={value}
-        onChange={onChange}
-        {...props.input}
-      />
-    </div>
+    <InputMask mask={mask} autoComplete="off" value={value} onChange={onChange}>
+      {() => {
+        return (
+          <TextField
+            className="phoneInput"
+            name={name}
+            label={formLabel}
+            value={value}
+            fullWidth={fullWidth}
+            required
+            type="text"
+            variant="outlined"
+          />
+        );
+      }}
+    </InputMask>
   );
 };
 

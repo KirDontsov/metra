@@ -58,18 +58,21 @@ class Burger extends Component {
             <Fragment>
               <div className={navClass.join(" ")}>
                 <div className="container__mob">
-                  {this.props.routes.map(route => (
-                    <NavLink
-                      className={route.className}
-                      exact={route.isExact}
-                      activeClassName="active"
-                      key={route.path}
-                      to={route.path}
-                      onClick={this._onClick.bind(this)}
-                    >
-                      {route.name}
-                    </NavLink>
-                  ))}
+                  {this.props.routes.map(
+                    route =>
+                      route.id > 1 && (
+                        <NavLink
+                          className={route.className}
+                          exact={route.isExact}
+                          activeClassName="active"
+                          key={route.name}
+                          to={route.path}
+                          onClick={this._onClick.bind(this)}
+                        >
+                          {route.name}
+                        </NavLink>
+                      )
+                  )}
                   <div className="navBottom">
                     <a href="tel:+79181233333" className="phone">
                       +7 (918) 123-33-33
@@ -93,9 +96,7 @@ class Burger extends Component {
                   }
                 />
               </Button>
-              <Link className="logo__mob" to="/">
-                Metra
-              </Link>
+              <Link className="logo__mob" to="/"></Link>
             </Fragment>
           )}
         </Motion>

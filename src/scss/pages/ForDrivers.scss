@@ -1,0 +1,16 @@
+@import "../Vars.scss";
+
+.container.forDrivers {
+  display: flex;
+  flex-direction: row;
+}
+
+.heroBanner {
+  width: 737px;
+  height: 505px;
+  object-fit: cover;
+  margin-bottom: 115px;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+}

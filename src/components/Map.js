@@ -15,7 +15,7 @@ import axios from "axios";
 import _ from "lodash";
 import { default as bezierSpline } from "@turf/bezier-spline";
 import * as helpers from "@turf/helpers";
-import carIcon from "../img/car.png";
+import carIcon from "../assets/img/car.png";
 import "../scss/Map.scss";
 
 const greenIcon = L.icon({
