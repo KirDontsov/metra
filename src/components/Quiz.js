@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from "react";
 import DadataSuggestions from "react-dadata-suggestions";
-import MaskInput from "./MaskInput";
 import { connect } from "react-redux";
 import ChangeCity from "../components/ChangeCity";
 import "../scss/Quiz.scss";

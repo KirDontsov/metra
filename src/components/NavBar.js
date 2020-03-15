@@ -4,14 +4,14 @@ import { NavLink, Link } from "react-router-dom";
 import "../scss/Nav.scss";
 
 const NavBar = props => {
-  function handleClick(e) {
-    props.slide(true);
-    scrollToTop();
-  }
-  function scrollToTop() {
-    let div = document.querySelector(".wrapper");
-    div.scrollTop = 0;
-  }
+  // function handleClick(e) {
+  //   props.slide(true);
+  //   scrollToTop();
+  // }
+  // function scrollToTop() {
+  //   let div = document.querySelector(".wrapper");
+  //   div.scrollTop = 0;
+  // }
   return (
     <div className="nav-wrapper">
       {/* <div className="center">
@@ -38,7 +38,7 @@ const NavBar = props => {
               activeclassname="active"
               key={route.path}
               to={route.path}
-              onClick={e => handleClick(e)}
+              // onClick={e => handleClick(e)}
             >
               {route.name}
             </Link>

@@ -24,8 +24,8 @@ const Benefits = () => {
             alt="Такси Метра"
           />
           <div className="cardContent">
-            <div className="cardTitle">Безопасность</div>
-            <div className="cardText">Водители соблюдают безопасность</div>
+            <div className="cardTitle">Доброжелательность</div>
+            <div className="cardText">Приятные поездки</div>
           </div>
         </div>
         <div className="col">
@@ -35,8 +35,8 @@ const Benefits = () => {
             alt="Такси Метра"
           />
           <div className="cardContent">
-            <div className="cardTitle">Безопасность</div>
-            <div className="cardText">Водители соблюдают безопасность</div>
+            <div className="cardTitle">Корпоративные клиенты</div>
+            <div className="cardText">Стабильность и надежность</div>
           </div>
         </div>
       </div>

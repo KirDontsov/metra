@@ -43,14 +43,10 @@ class ChangeCity extends Component {
     switch (this.props.city) {
       case 10:
         return "Геленджик";
-        break;
       case 20:
         return "Новороссийск";
-        break;
       case 30:
         return "Ейск";
-        break;
-
       default:
         break;
     }

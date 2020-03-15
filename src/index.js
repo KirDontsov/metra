@@ -22,22 +22,24 @@ import { init } from "@rematch/core";
 import shutter from "./models/shutter";
 import setItems from "./models/setItems";
 import Quiz from "./models/Quiz";
+import QuizDrivers from "./models/QuizDrivers";
 import city from "./models/city";
 
 import App from "./App";
 
 const store = init({
-	models: {
-		shutter,
-		setItems,
-		Quiz,
-		city
-	}
+  models: {
+    shutter,
+    setItems,
+    Quiz,
+    QuizDrivers,
+    city
+  }
 });
 
 ReactDOM.render(
-	<Provider store={store}>
-		<App />
-	</Provider>,
-	document.getElementById("root")
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById("root")
 );

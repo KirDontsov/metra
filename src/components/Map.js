@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import {
   Map as LeafletMap,
-  TileLayer,
+  // TileLayer,
   Marker,
   Popup,
   ZoomControl,

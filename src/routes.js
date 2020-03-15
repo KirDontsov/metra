@@ -1,5 +1,6 @@
 import Home from "./pages/Home";
 import ForDrivers from "./pages/ForDrivers";
+import Err from "./pages/Err";
 
 export const routes = [
   // --------------------------- isNavBar
@@ -29,7 +30,7 @@ export const routes = [
     name: "Для водителей",
     className: "nav-link",
     component: ForDrivers
-  }
+  },
   // {
   // 	id: 4,
   // 	isNavBar: true,
@@ -48,4 +49,12 @@ export const routes = [
   // 	className: "nav-link",
   // 	component: Contacts
   // }
+
+  // --------------------------- 404
+  {
+    id: 18,
+    isExact: true,
+    component: Err,
+    status: 404
+  }
 ];
