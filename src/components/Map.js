@@ -20,7 +20,6 @@ const greenIcon = L.icon({
 	popupAnchor: [-3, -6]
 });
 
-
 class MyMap extends Component {
 	request(that) {
 		const { setItems } = that.props;
@@ -46,10 +45,30 @@ class MyMap extends Component {
 		this.request(this);
 	}
 
+	renderCars() {
+		let sortedCars = [];
+		if (!this.props.isReady) {
+			return "Загрузка...";
+		} else {
+			for (let i = 0; i < this.props.items.length; i++) {
+				const elem = this.props.items[i];
+				sortedCars.push(elem);
+			}
+			return sortedCars.map((item, i) => {
+				let pos = [item.latitude, item.longitude];
+				return (
+					<RotatedMarker key={i} position={pos} icon={greenIcon} rotationAngle={item.course} rotationOrigin={"center"}>
+						<Popup>
+							<span>{item.CarModel}</span>
+						</Popup>
+					</RotatedMarker>
+				);
+			});
+		}
+	}
+
 	render() {
 		const {
-			items,
-			isReady,
 			zoom,
 			latitude,
 			longitude,
@@ -95,10 +114,6 @@ class MyMap extends Component {
 			<Fragment>
 				<LeafletMap center={position} zoom={zoom} zoomControl={false} maxZoom={20} minZoom={4}>
 					<TileLayer url="http://taxi.tools:8000/tilesmass.{s}/{z}/{x}/{y}.png" />
-					{/* <MapboxLayer
-            accessToken={MAPBOX_ACCESS_TOKEN}
-            style="mapbox://styles/kirdontsov/ck6cbhtnf27vu1inwoo33gdcx"
-          /> */}
 
 					<ZoomControl position="bottomright" />
 
@@ -142,19 +157,7 @@ class MyMap extends Component {
 						""
 					)}
 
-					{!isReady
-						? "Загрузка..."
-						: items.map((item, i) => {
-								let pos = [item.latitude, item.longitude];
-								// console.log(item);
-								return (
-									<RotatedMarker key={i} position={pos} icon={greenIcon} rotationAngle={item.course} rotationOrigin={"center"}>
-										<Popup>
-											<span>{item.CarModel}</span>
-										</Popup>
-									</RotatedMarker>
-								);
-						  })}
+					{this.renderCars()}
 				</LeafletMap>
 			</Fragment>
 		);
