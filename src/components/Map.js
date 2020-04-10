@@ -4,7 +4,8 @@ import RotatedMarker from "./RotatedMarker";
 import L from "leaflet";
 import { connect } from "react-redux";
 import axios from "axios";
-import _ from "lodash";
+import update from "immutability-helper";
+import { values } from "lodash";
 import { default as bezierSpline } from "@turf/bezier-spline";
 import * as helpers from "@turf/helpers";
 import carIcon from "../assets/img/car.png";
@@ -21,10 +22,14 @@ const greenIcon = L.icon({
 });
 
 class MyMap extends Component {
+	state = { cars: [] };
 	request(that) {
 		const { setItems } = that.props;
 		axios.get("http://taxi.tools:8000/cabsformetrasite").then(({ data }) => {
-			setItems(_.values(data.carsList));
+			const cars = values(data.carsList);
+			this.setState(prevState => ({ cars: update(prevState.cars, { $set: cars }) }));
+			setItems(this.state.cars);
+
 			setTimeout(() => {
 				that.request(that);
 				this.setPath();
@@ -46,15 +51,11 @@ class MyMap extends Component {
 	}
 
 	renderCars() {
-		let sortedCars = [];
 		if (!this.props.isReady) {
 			return "Загрузка...";
 		} else {
-			for (let i = 0; i < this.props.items.length; i++) {
-				const elem = this.props.items[i];
-				sortedCars.push(elem);
-			}
-			return sortedCars.map((item, i) => {
+			console.log(this.state.cars);
+			return this.state.cars.map((item, i) => {
 				let pos = [item.latitude, item.longitude];
 				return (
 					<RotatedMarker key={i} position={pos} icon={greenIcon} rotationAngle={item.course} rotationOrigin={"center"}>
